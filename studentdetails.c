@@ -1,7 +1,7 @@
 #include<stdio.h>
-
 int main(){
-int i,size=1;
+int i,size;
+//Student,is used to store student details- USN, Name, Mobile Number
 struct Student{
     char USN[10];
     char Name[40];
@@ -14,7 +14,7 @@ printf("\nWELCOME TO STUDENT REGISTARTION PORTAL");
 for (i=0;i<size;i++)
 {
     printf("\nSTUDENT: %d",i+1);
-    printf("\nEnter your 10 digit USN");
+    printf("\nEnter your 10 digit USN:");
     scanf("%s",student[i].USN);
     printf("Enter your Name");
     getchar();
