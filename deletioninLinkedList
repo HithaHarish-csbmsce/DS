@@ -1,0 +1,94 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+void delFirst(struct Node** head) {
+    if (*head == NULL) return;
+    struct Node* temp = *head;
+    *head = temp->next;
+    free(temp);
+}
+
+void delMiddle(struct Node** head, int key) {
+    if (*head == NULL) return;
+    struct Node* temp = *head, *prev = NULL;
+
+    while (temp != NULL && temp->data != key) {
+        prev = temp;
+        temp = temp->next;
+    }
+
+    if (temp == NULL) return;
+    prev->next = temp->next;
+    free(temp);
+}
+
+void delEnd(struct Node** head) {
+    if (*head == NULL) return;
+
+    if ((*head)->next == NULL) {
+        free(*head);
+        *head = NULL;
+        return;
+    }
+
+    struct Node* temp = *head;
+    while (temp->next->next != NULL) {
+        temp = temp->next;
+    }
+
+    free(temp->next);
+    temp->next = NULL;
+}
+
+void push(struct Node** head, int new_data) {
+    struct Node* new_node = (struct Node*)malloc(sizeof(struct Node));
+    new_node->data = new_data;
+    new_node->next = *head;
+    *head = new_node;
+}
+
+void printList(struct Node* node) {
+    while (node != NULL) {
+        printf("%d ", node->data);
+        node = node->next;
+    }
+    printf("\n");
+}
+
+int main() {
+    struct Node* head = NULL;
+
+    push(&head, 7);
+    push(&head, 1);
+    push(&head, 3);
+    push(&head, 2);
+
+    printf("Original list: ");
+    printList(head);
+
+    delFirst(&head);
+    printf("After deleting first node: ");
+    printList(head);
+
+    delMiddle(&head, 3);
+    printf("After deleting middle node (3): ");
+    printList(head);
+
+    delEnd(&head);
+    printf("After deleting last node: ");
+    printList(head);
+
+    return 0;
+}
+
+OUTPUT:
+Original list: 2 3 1 7
+After deleting first node: 3 1 7
+After deleting middle node (3): 1 7
+After deleting last node: 1
+
